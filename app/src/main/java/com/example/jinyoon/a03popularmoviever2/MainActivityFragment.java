@@ -1,5 +1,7 @@
 package com.example.jinyoon.a03popularmoviever2;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -57,7 +59,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.poster_view);
-        getMovieInfo();
+        updatePoster();
 
         return rootView;
     }
@@ -65,10 +67,17 @@ public class MainActivityFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.action_refresh:
-                getMovieInfo();
+                updatePoster();
                 break;
         }
         return true;
+    }
+
+
+    public void updatePoster(){
+        SharedPreferences spr = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mode=spr.getString(getString(R.string.pref_general_key), getString(R.string.pref_general_default));
+        getMovieInfo();
     }
 
     private void getMovieInfo() {
@@ -78,7 +87,7 @@ public class MainActivityFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        mode="popular";
+
         TMDBService.TMDBAPI tmdbapi = retrofit.create(TMDBService.TMDBAPI.class);
         call = tmdbapi.getInfo(mode, BuildConfig.MOVIE_API_KEY);
 
