@@ -97,7 +97,7 @@ public class MainActivityFragment extends Fragment {
                 mMovieInfo = response.body();
                 mResults=mMovieInfo.getResults();
                 mResultAdapter= new RecyclerViewAdapter(getContext(),mResults);
-                mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
                 mRecyclerView.setAdapter(mResultAdapter);
             }
             @Override

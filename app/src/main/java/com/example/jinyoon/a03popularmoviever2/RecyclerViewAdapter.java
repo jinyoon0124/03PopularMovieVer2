@@ -1,6 +1,8 @@
 package com.example.jinyoon.a03popularmoviever2;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import com.example.jinyoon.a03popularmoviever2.retrofit.Results;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -23,10 +26,13 @@ public class RecyclerViewAdapter
     private List<Results> mResults;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-         public final ImageView mImageView;
+        public final ImageView mImageView;
+        private View mView;
 
-         public ViewHolder(View itemView) {
+
+        public ViewHolder(View itemView) {
             super(itemView);
+            mView=itemView;
             mImageView = (ImageView) itemView.findViewById(R.id.poster_image_view);
          }
     }
@@ -42,14 +48,23 @@ public class RecyclerViewAdapter
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.poster_item_list, parent, false);
-        ViewHolder viewHolder =new ViewHolder(view);
 
-        return viewHolder;
+
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Results results = mResults.get(position);
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra("OBJECT_EXTRA", results);
+                mContext.startActivity(intent);
+            }
+        });
 
         Picasso
                 .with(mContext)

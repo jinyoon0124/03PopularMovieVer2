@@ -3,11 +3,9 @@ package com.example.jinyoon.a03popularmoviever2.retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Jin Yoon on 5/18/2016.
- */
+import java.io.Serializable;
 
-public class Results {
+public class Results implements Serializable{
 
     final String POSTER_PATH="http://image.tmdb.org/t/p/w185";
 
