@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Results implements Serializable{
 
     final String POSTER_PATH="http://image.tmdb.org/t/p/w185";
+    final String BACKDROP_PATH="http://image.tmdb.org/t/p/w500";
 
     @SerializedName("poster_path")
     @Expose
@@ -32,6 +33,10 @@ public class Results implements Serializable{
     @SerializedName("vote_average")
     @Expose
     private Double voteAverage;
+
+    @SerializedName("backdrop_path")
+    @Expose
+    private String backdropPath;
 
     public String toString(){
         return posterPath;
@@ -135,6 +140,13 @@ public class Results implements Serializable{
         this.voteAverage = voteAverage;
     }
 
+    public String getBackdropPath() {
+        return BACKDROP_PATH+backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
 }
 
 

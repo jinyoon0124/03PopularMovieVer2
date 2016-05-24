@@ -73,7 +73,6 @@ public class MainActivityFragment extends Fragment {
         return true;
     }
 
-
     public void updatePoster(){
         SharedPreferences spr = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mode=spr.getString(getString(R.string.pref_general_key), getString(R.string.pref_general_default));
@@ -86,7 +85,6 @@ public class MainActivityFragment extends Fragment {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
         TMDBService.TMDBAPI tmdbapi = retrofit.create(TMDBService.TMDBAPI.class);
         call = tmdbapi.getInfo(mode, BuildConfig.MOVIE_API_KEY);
@@ -106,7 +104,5 @@ public class MainActivityFragment extends Fragment {
             }
         });
     }
-
-
 
 }
