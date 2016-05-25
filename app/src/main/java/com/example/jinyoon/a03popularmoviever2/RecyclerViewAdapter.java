@@ -16,9 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Jin Yoon on 5/19/2016.
- */
 public class RecyclerViewAdapter
         extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 

@@ -1,22 +1,27 @@
 package com.example.jinyoon.a03popularmoviever2.retrofit;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Jin Yoon on 4/25/2016.
  */
-public class MovieInfo {
+public class ReviewInfo {
 
-    private List<Results> results = new ArrayList<>();
+    @SerializedName("results")
+    @Expose
+    private List<Reviews> reviews = new ArrayList<>();
 
 
-    public List<Results> getResults() {
-        return results;
+    public List<Reviews> getReviews() {
+        return reviews;
     }
 
-    public void setResults(List<Results> results) {
-        this.results = results;
+    public void setReviews(List<Reviews> reviews) {
+        this.reviews = reviews;
     }
 
 }

@@ -20,5 +20,11 @@ public final class TMDBService {
                 @Path("mode") String mode,
                 @Query("api_key") String api_key
         );
+
+        @GET("/3/movie/{id}/reviews")
+        Call<ReviewInfo> getReview(
+                @Path("id") int id,
+                @Query("api_key") String api_key
+        );
     }
 }
