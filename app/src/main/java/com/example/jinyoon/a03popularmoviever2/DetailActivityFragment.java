@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.jinyoon.a03popularmoviever2.retrofit.MovieInfo;
@@ -20,7 +21,11 @@ import com.example.jinyoon.a03popularmoviever2.retrofit.Results;
 import com.example.jinyoon.a03popularmoviever2.retrofit.ReviewInfo;
 import com.example.jinyoon.a03popularmoviever2.retrofit.Reviews;
 import com.example.jinyoon.a03popularmoviever2.retrofit.TMDBService;
+import com.example.jinyoon.a03popularmoviever2.retrofit.TrailerInfo;
+import com.example.jinyoon.a03popularmoviever2.retrofit.Trailers;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -44,6 +49,13 @@ public class DetailActivityFragment extends Fragment {
     private ReviewAdapter mReviewAdapter;
     private TextView mTitleView;
 
+    private Call<TrailerInfo> trailerInfoCall;
+    private TrailerInfo mTrailerInfo;
+    private List<Trailers> mTrailers;
+    private RecyclerView mTrailerView;
+    private TrailerAdapter mTrailerAdapter;
+    private TextView mTrailerTitleTextView;
+
     public DetailActivityFragment() {
     }
 
@@ -53,7 +65,7 @@ public class DetailActivityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.review_view);
-
+        mTrailerView = (RecyclerView) rootView.findViewById(R.id.trailer_view);
         ImageView backdropImageView = (ImageView) rootView.findViewById(R.id.backdrop);
 
         CollapsingToolbarLayout collapsingToolbar =
@@ -64,7 +76,7 @@ public class DetailActivityFragment extends Fragment {
         TextView ratingTextView = (TextView) rootView.findViewById(R.id.detail_movie_rating);
         TextView dateTextView = (TextView) rootView.findViewById(R.id.detail_movie_date);
         mTitleView = (TextView) rootView.findViewById(R.id.review_title);
-
+        mTrailerTitleTextView = (TextView) rootView.findViewById(R.id.trailer_title);
 
         Intent intent = getActivity().getIntent();
         if(intent!=null && intent.hasExtra("OBJECT_EXTRA")){
@@ -81,6 +93,7 @@ public class DetailActivityFragment extends Fragment {
             collapsingToolbar.setTitle(mResults.getTitle());
 
             getReview();
+            getTrailer();
 
         }
         return rootView;
@@ -114,5 +127,37 @@ public class DetailActivityFragment extends Fragment {
             }
         });
     }
+
+    public void getTrailer(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TMDBService.TMDBAPI tmdbapi = retrofit.create(TMDBService.TMDBAPI.class);
+        trailerInfoCall = tmdbapi.getTrailer(id, BuildConfig.MOVIE_API_KEY);
+
+        trailerInfoCall.enqueue(new Callback<TrailerInfo>() {
+            @Override
+            public void onResponse(Call<TrailerInfo> call, Response<TrailerInfo> response) {
+                mTrailerInfo= response.body();
+                mTrailers=mTrailerInfo.getTrailers();
+
+                mTrailerAdapter = new TrailerAdapter(getActivity(), mTrailers);
+                mTrailerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+                mTrailerView.setAdapter(mTrailerAdapter);
+                mTrailerTitleTextView.setText(String.format(
+                        getString(R.string.trailer_title), mTrailers.size()));
+
+            }
+
+            @Override
+            public void onFailure(Call<TrailerInfo> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 
 }

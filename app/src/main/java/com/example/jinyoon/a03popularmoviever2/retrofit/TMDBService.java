@@ -26,5 +26,11 @@ public final class TMDBService {
                 @Path("id") int id,
                 @Query("api_key") String api_key
         );
+
+        @GET("/3/movie/{id}/videos")
+        Call<TrailerInfo> getTrailer(
+                @Path("id") int id,
+                @Query("api_key") String api_key
+        );
     }
 }

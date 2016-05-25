@@ -2,18 +2,16 @@ package com.example.jinyoon.a03popularmoviever2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.jinyoon.a03popularmoviever2.retrofit.Results;
+import com.example.jinyoon.a03popularmoviever2.retrofit.Trailers;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class RecyclerViewAdapter
@@ -32,6 +30,7 @@ public class RecyclerViewAdapter
             mView=itemView;
             mImageView = (ImageView) itemView.findViewById(R.id.poster_image_view);
          }
+
     }
 
     public RecyclerViewAdapter(Context context, List<Results> results) {

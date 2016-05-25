@@ -26,5 +26,6 @@
     <string name="poster_imageview_description">poster will be added here</string>
     <string name="review_content">%1$s \n  by %2$s</string>
     <string name="review_title">Reviews (%1$d)</string>
+    <string name="trailer_title">Trailers (%1$d)</string>
 
 </resources>
