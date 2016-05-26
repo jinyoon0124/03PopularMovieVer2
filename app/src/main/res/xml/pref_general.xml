@@ -9,4 +9,12 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_general_title" />
 
+
+    <CheckBoxPreference
+        android:title="@string/pref_favorite_title"
+        android:key = "@string/pref_favorite_key"
+        android:defaultValue="false"
+        android:summaryOn="@string/pref_favorite_sum_on"
+        android:summaryOff="@string/pref_favorite_sum_off"/>
+
 </PreferenceScreen>

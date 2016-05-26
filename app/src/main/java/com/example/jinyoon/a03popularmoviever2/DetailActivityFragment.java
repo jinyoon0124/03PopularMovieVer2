@@ -5,11 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -41,10 +46,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailActivityFragment extends Fragment {
     private Results mResults;
     final String BASE_URL = "http://api.themoviedb.org";
+    final String LOG_TAG = this.getClass().getSimpleName();
+
+
     private Call<ReviewInfo> reviewInfoCall;
     private ReviewInfo mReviewInfo;
     private List<Reviews> mReviews;
     int id;
+    private String mShareKey;
     private RecyclerView mRecyclerView;
     private ReviewAdapter mReviewAdapter;
     private TextView mTitleView;
@@ -58,6 +67,38 @@ public class DetailActivityFragment extends Fragment {
 
     public DetailActivityFragment() {
     }
+//
+//    public void onActivityCreated(Bundle savedInstanceState){
+//        super.onCreate(savedInstanceState);
+//        setHasOptionsMenu(true);
+//    }
+//
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+//        inflater.inflate(R.menu.detail_fragment, menu);
+//
+//        MenuItem item =  menu.findItem(R.id.menu_item_share);
+//        ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+//        if(mShareActionProvider!=null){
+//            mShareActionProvider.setShareIntent(createShareIntent());
+//        }else{
+//            Log.d(LOG_TAG, "Share Action Provider is null");
+//        }
+//
+//    }
+//
+//    private Intent createShareIntent(){
+//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        shareIntent.setType("text/plain");
+//        if(mTrailers!=null){
+//            shareIntent.putExtra(Intent.EXTRA_TEXT, mShareKey);
+//        }else{
+//            Log.v("SHARE INTENT", "NULL");
+//        }
+//
+//        return shareIntent;
+//    }
+//
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
