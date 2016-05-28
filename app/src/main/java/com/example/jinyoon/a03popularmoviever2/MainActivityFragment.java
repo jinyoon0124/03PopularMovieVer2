@@ -74,7 +74,7 @@ public class MainActivityFragment extends Fragment {
                 break;
 
             case R.id.action_remove:
-                MyUtility.removeStringFromPreferences(getContext());
+                MyUtility.clearStringFromPreferences(getContext());
                 Toast.makeText(getContext(), "All Favorite Removed!", Toast.LENGTH_SHORT).show();
                 break;
         }

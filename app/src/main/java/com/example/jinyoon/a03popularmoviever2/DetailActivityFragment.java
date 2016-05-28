@@ -142,6 +142,7 @@ public class DetailActivityFragment extends Fragment {
 
                 }else{
                     Toast.makeText(getContext(), "Favorite removed", Toast.LENGTH_SHORT).show();
+                    MyUtility.removeStringFromPreferences(getContext(), String.valueOf(id));
                 }
             }
         });
