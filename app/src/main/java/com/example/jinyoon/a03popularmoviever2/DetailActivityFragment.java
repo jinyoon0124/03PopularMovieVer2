@@ -137,13 +137,11 @@ public class DetailActivityFragment extends Fragment {
             public void onClick(View v) {
                 boolean checked = ((CheckBox) v).isChecked();
                 if(checked){
-                    mResults.setFavorite(true);
                     Toast.makeText(getContext(), "Favorite added", Toast.LENGTH_SHORT).show();
                     MyUtility.addFavoriteItem(getContext(), String.valueOf(id));
 
                 }else{
                     Toast.makeText(getContext(), "Favorite removed", Toast.LENGTH_SHORT).show();
-                    mResults.setFavorite(false);
                 }
             }
         });
@@ -166,8 +164,8 @@ public class DetailActivityFragment extends Fragment {
             ratingTextView.setText(String.format(getString(R.string.user_rating),mResults.getVoteAverage()));
             dateTextView.setText(String.format(getString(R.string.release_date),mResults.getReleaseDate()));
             collapsingToolbar.setTitle(mResults.getTitle());
-            String [] test = MyUtility.getFavoriteList(getContext());
-            if(test!=null && Arrays.asList(test).contains(String.valueOf(id))){
+            Set<String> test = MyUtility.getStringFromPreferences(getContext(),FAVORITE_KEY);
+            if(test!=null && test.contains(String.valueOf(id))){
                 favoriteCheckbox.setChecked(true);
             }else{
                 favoriteCheckbox.setChecked(false);

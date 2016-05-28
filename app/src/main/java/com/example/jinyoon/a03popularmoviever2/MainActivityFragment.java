@@ -51,6 +51,7 @@ public class MainActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         inflater.inflate(R.menu.movie_fragment, menu);
@@ -71,6 +72,11 @@ public class MainActivityFragment extends Fragment {
             case R.id.action_refresh:
                 updatePoster();
                 break;
+
+            case R.id.action_remove:
+                MyUtility.removeStringFromPreferences(getContext());
+                Toast.makeText(getContext(), "All Favorite Removed!", Toast.LENGTH_SHORT).show();
+                break;
         }
         return true;
     }
@@ -83,7 +89,6 @@ public class MainActivityFragment extends Fragment {
             getFavoriteInfo();
 
         }else{
-            MyUtility.removeStringFromPreferences(getContext());
             getMovieInfo();
         }
     }

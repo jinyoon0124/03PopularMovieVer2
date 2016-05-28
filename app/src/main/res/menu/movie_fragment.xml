@@ -7,5 +7,10 @@
         android:title="@string/action_refresh"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/action_remove"
+        android:title="@string/action_remove_favorite"
+        app:showAsAction="never"/>
+
 
 </menu>
