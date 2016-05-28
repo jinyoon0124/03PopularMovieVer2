@@ -103,6 +103,16 @@
                     android:textColor="@color/colorText"
                     android:textStyle="bold" />
 
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkbox_text"
+                    android:id="@+id/favorite_checkBox"
+                    android:layout_alignLeft="@+id/detail_movie_title"
+                    android:layout_alignStart="@+id/detail_movie_title"
+                    android:layout_below="@+id/detail_movie_date"
+                    />
+
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -126,7 +136,6 @@
                     android:layout_below="@+id/trailer_title"
                     />
             </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

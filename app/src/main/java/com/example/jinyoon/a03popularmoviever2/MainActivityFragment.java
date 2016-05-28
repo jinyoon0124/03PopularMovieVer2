@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.jinyoon.a03popularmoviever2.retrofit.MovieInfo;
 import com.example.jinyoon.a03popularmoviever2.retrofit.Results;
@@ -40,6 +41,7 @@ public class MainActivityFragment extends Fragment {
     private String mode;
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mResultAdapter;
+    private boolean mFavorite;
 
 
     public MainActivityFragment() {
@@ -76,11 +78,18 @@ public class MainActivityFragment extends Fragment {
     public void updatePoster(){
         SharedPreferences spr = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mode=spr.getString(getString(R.string.pref_general_key), getString(R.string.pref_general_default));
-        getMovieInfo();
+        mFavorite=spr.getBoolean(getString(R.string.pref_favorite_key), false);
+        if(mFavorite){
+            getFavoriteInfo();
+
+        }else{
+            MyUtility.removeStringFromPreferences(getContext());
+            getMovieInfo();
+        }
     }
 
     private void getMovieInfo() {
-
+        Toast.makeText(getContext(),"GETMOVIEINFO CALLED", Toast.LENGTH_SHORT).show();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -105,4 +114,9 @@ public class MainActivityFragment extends Fragment {
         });
     }
 
+    private void getFavoriteInfo(){
+        Toast.makeText(getContext(),"FAVORITE SELECTED", Toast.LENGTH_SHORT).show();
+        getMovieInfo();
+
+    }
 }

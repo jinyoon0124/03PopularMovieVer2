@@ -38,6 +38,8 @@ public class Results implements Serializable{
     @Expose
     private String backdropPath;
 
+    private boolean favorite;
+
     public String toString(){
         return posterPath;
     }
@@ -146,6 +148,14 @@ public class Results implements Serializable{
 
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }
 

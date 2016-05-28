@@ -2,6 +2,7 @@ package com.example.jinyoon.a03popularmoviever2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -17,9 +18,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityManager;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.jinyoon.a03popularmoviever2.retrofit.MovieInfo;
 import com.example.jinyoon.a03popularmoviever2.retrofit.Results;
@@ -32,13 +37,19 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -48,6 +59,7 @@ public class DetailActivityFragment extends Fragment {
     final String BASE_URL = "http://api.themoviedb.org";
     final String LOG_TAG = this.getClass().getSimpleName();
 
+    private List<Integer> mIdList = new ArrayList<>();
 
     private Call<ReviewInfo> reviewInfoCall;
     private ReviewInfo mReviewInfo;
@@ -64,6 +76,8 @@ public class DetailActivityFragment extends Fragment {
     private RecyclerView mTrailerView;
     private TrailerAdapter mTrailerAdapter;
     private TextView mTrailerTitleTextView;
+
+    private final String FAVORITE_KEY = "favorite";
 
     public DetailActivityFragment() {
     }
@@ -116,13 +130,33 @@ public class DetailActivityFragment extends Fragment {
         TextView synopsisTextView = (TextView) rootView.findViewById(R.id.detail_movie_synopsis);
         TextView ratingTextView = (TextView) rootView.findViewById(R.id.detail_movie_rating);
         TextView dateTextView = (TextView) rootView.findViewById(R.id.detail_movie_date);
+        CheckBox favoriteCheckbox = (CheckBox) rootView.findViewById(R.id.favorite_checkBox);
+
+        favoriteCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean checked = ((CheckBox) v).isChecked();
+                if(checked){
+                    mResults.setFavorite(true);
+                    Toast.makeText(getContext(), "Favorite added", Toast.LENGTH_SHORT).show();
+                    MyUtility.addFavoriteItem(getContext(), String.valueOf(id));
+
+                }else{
+                    Toast.makeText(getContext(), "Favorite removed", Toast.LENGTH_SHORT).show();
+                    mResults.setFavorite(false);
+                }
+            }
+        });
         mTitleView = (TextView) rootView.findViewById(R.id.review_title);
         mTrailerTitleTextView = (TextView) rootView.findViewById(R.id.trailer_title);
+
 
         Intent intent = getActivity().getIntent();
         if(intent!=null && intent.hasExtra("OBJECT_EXTRA")){
             mResults = (Results) intent.getSerializableExtra("OBJECT_EXTRA");
+
             id=mResults.getId();
+
             Picasso.with(getContext())
                     .load(mResults.getBackdropPath())
                     .into(backdropImageView);
@@ -132,6 +166,12 @@ public class DetailActivityFragment extends Fragment {
             ratingTextView.setText(String.format(getString(R.string.user_rating),mResults.getVoteAverage()));
             dateTextView.setText(String.format(getString(R.string.release_date),mResults.getReleaseDate()));
             collapsingToolbar.setTitle(mResults.getTitle());
+            String [] test = MyUtility.getFavoriteList(getContext());
+            if(test!=null && Arrays.asList(test).contains(String.valueOf(id))){
+                favoriteCheckbox.setChecked(true);
+            }else{
+                favoriteCheckbox.setChecked(false);
+            }
 
             getReview();
             getTrailer();
