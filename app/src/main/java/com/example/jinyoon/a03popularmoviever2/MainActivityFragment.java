@@ -1,5 +1,6 @@
 package com.example.jinyoon.a03popularmoviever2;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,9 @@ import com.example.jinyoon.a03popularmoviever2.retrofit.Results;
 import com.example.jinyoon.a03popularmoviever2.retrofit.TMDBService;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +42,7 @@ public class MainActivityFragment extends Fragment {
     private List<Results> mResults;
     private Call<MovieInfo> call;
     private String mode;
+    private final String FAVORITE_KEY = "favorite";
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mResultAdapter;
     private boolean mFavorite;
@@ -121,7 +125,38 @@ public class MainActivityFragment extends Fragment {
 
     private void getFavoriteInfo(){
         Toast.makeText(getContext(),"FAVORITE SELECTED", Toast.LENGTH_SHORT).show();
-        getMovieInfo();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TMDBService.TMDBAPI tmdbapi = retrofit.create(TMDBService.TMDBAPI.class);
+        call = tmdbapi.getInfo(mode, BuildConfig.MOVIE_API_KEY);
+
+        call.enqueue(new Callback<MovieInfo>() {
+            @Override
+            public void onResponse(Call<MovieInfo> call, Response<MovieInfo> response) {
+                mMovieInfo = response.body();
+                mResults=mMovieInfo.getResults();
+                SharedPreferences spf = getContext().getSharedPreferences(FAVORITE_KEY, Context.MODE_PRIVATE);
+                Set<String> favoriteIdSet = spf.getStringSet(FAVORITE_KEY, null);
+                List<Results> favoriteList = new ArrayList<>();
+                for(Results i : mResults ){
+                    if(favoriteIdSet!=null && favoriteIdSet.contains(String.valueOf(i.getId()))){
+                        favoriteList.add(i);
+                    }
+                }
+
+                mResultAdapter= new RecyclerViewAdapter(getContext(),favoriteList);
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                mRecyclerView.setAdapter(mResultAdapter);
+            }
+            @Override
+            public void onFailure(Call<MovieInfo> call, Throwable t) {
+
+            }
+        });
 
     }
 }
