@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     tools:context="com.example.jinyoon.a03popularmoviever2.DetailActivity">
     <android.support.design.widget.AppBarLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="256dp"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="false">
 
         <android.support.design.widget.CollapsingToolbarLayout
 
@@ -19,10 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
+            app:statusBarScrim="@color/colorPrimaryTrans"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp">
+
 
             <ImageView
                 android:id="@+id/backdrop"
@@ -37,7 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin"
+                />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 

@@ -11,13 +11,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+    private final String DETAILFRAGMENT_TAG="DFTAG";
+    public static boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+
+        if(findViewById(R.id.movie_detail_container)!=null){
+            mTwoPane=true;
+//            if(savedInstanceState==null){
+//                getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.movie_detail_container, new DetailActivityFragment(), DETAILFRAGMENT_TAG)
+//                        .commit();
+//            }
+        }else{
+            mTwoPane=false;
+        }
+
 
     }
 
@@ -44,4 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

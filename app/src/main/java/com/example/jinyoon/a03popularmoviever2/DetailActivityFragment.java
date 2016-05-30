@@ -65,7 +65,6 @@ public class DetailActivityFragment extends Fragment {
     private ReviewInfo mReviewInfo;
     private List<Reviews> mReviews;
     int id;
-    private String mShareKey;
     private RecyclerView mRecyclerView;
     private ReviewAdapter mReviewAdapter;
     private TextView mTitleView;
@@ -132,6 +131,11 @@ public class DetailActivityFragment extends Fragment {
         TextView dateTextView = (TextView) rootView.findViewById(R.id.detail_movie_date);
         CheckBox favoriteCheckbox = (CheckBox) rootView.findViewById(R.id.favorite_checkBox);
 
+        Bundle arguments = getArguments();
+        if(arguments!=null){
+            mResults=(Results)arguments.getSerializable("OBJECT_EXTRA");
+        }
+
         favoriteCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,32 +154,32 @@ public class DetailActivityFragment extends Fragment {
         mTrailerTitleTextView = (TextView) rootView.findViewById(R.id.trailer_title);
 
 
-        Intent intent = getActivity().getIntent();
-        if(intent!=null && intent.hasExtra("OBJECT_EXTRA")){
-            mResults = (Results) intent.getSerializableExtra("OBJECT_EXTRA");
+//        Intent intent = getActivity().getIntent();
+//        if(intent!=null && intent.hasExtra("OBJECT_EXTRA")) {
+//            mResults = (Results) intent.getSerializableExtra("OBJECT_EXTRA");
+//        }
+        id=mResults.getId();
 
-            id=mResults.getId();
+        Picasso.with(getContext())
+                .load(mResults.getBackdropPath())
+                .into(backdropImageView);
 
-            Picasso.with(getContext())
-                    .load(mResults.getBackdropPath())
-                    .into(backdropImageView);
-
-            titleTextView.setText(mResults.getTitle());
-            synopsisTextView.setText(mResults.getOverview());
-            ratingTextView.setText(String.format(getString(R.string.user_rating),mResults.getVoteAverage()));
-            dateTextView.setText(String.format(getString(R.string.release_date),mResults.getReleaseDate()));
-            collapsingToolbar.setTitle(mResults.getTitle());
-            Set<String> test = MyUtility.getStringFromPreferences(getContext(),FAVORITE_KEY);
-            if(test!=null && test.contains(String.valueOf(id))){
-                favoriteCheckbox.setChecked(true);
-            }else{
-                favoriteCheckbox.setChecked(false);
-            }
-
-            getReview();
-            getTrailer();
-
+        titleTextView.setText(mResults.getTitle());
+        synopsisTextView.setText(mResults.getOverview());
+        ratingTextView.setText(String.format(getString(R.string.user_rating),mResults.getVoteAverage()));
+        dateTextView.setText(String.format(getString(R.string.release_date),mResults.getReleaseDate()));
+        collapsingToolbar.setTitle(mResults.getTitle());
+        Set<String> test = MyUtility.getStringFromPreferences(getContext(),FAVORITE_KEY);
+        if(test!=null && test.contains(String.valueOf(id))){
+            favoriteCheckbox.setChecked(true);
+        }else{
+            favoriteCheckbox.setChecked(false);
         }
+
+        getReview();
+        getTrailer();
+
+
         return rootView;
     }
 

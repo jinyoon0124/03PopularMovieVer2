@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -66,6 +68,9 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.poster_view);
+        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
         updatePoster();
 
         return rootView;
@@ -159,4 +164,6 @@ public class MainActivityFragment extends Fragment {
         });
 
     }
+
+
 }

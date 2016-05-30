@@ -2,7 +2,9 @@ package com.example.jinyoon.a03popularmoviever2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,10 @@ public class RecyclerViewAdapter
         extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private Context mContext;
+
     private List<Results> mResults;
+    private final String DETAILFRAGMENT_TAG="DFTAG";
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView mImageView;
@@ -53,12 +58,25 @@ public class RecyclerViewAdapter
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
+            Results results = mResults.get(position);
+
             @Override
             public void onClick(View v) {
-                Results results = mResults.get(position);
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra("OBJECT_EXTRA", results);
-                mContext.startActivity(intent);
+                if(MainActivity.mTwoPane){
+                    Bundle args = new Bundle();
+                    args.putSerializable("OBJECT_EXTRA", results);
+
+                    DetailActivityFragment fragment = new DetailActivityFragment();
+                    fragment.setArguments(args);
+
+                    ((MainActivity) mContext).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.movie_detail_container, fragment, DETAILFRAGMENT_TAG)
+                        .commit();
+                }else{
+                    Intent intent = new Intent(mContext, DetailActivity.class);
+                    intent.putExtra("OBJECT_EXTRA", results);
+                    mContext.startActivity(intent);
+                }
             }
         });
 
