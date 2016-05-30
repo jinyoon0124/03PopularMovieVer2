@@ -1,4 +1,4 @@
-package com.example.jinyoon.a03popularmoviever2.data;//package com.example.jinyoon.popularmovie.data;
+//package com.example.jinyoon.a03popularmoviever2.data;//package com.example.jinyoon.popularmovie.data;
 //
 //import android.content.Context;
 //import android.database.sqlite.SQLiteDatabase;
@@ -23,7 +23,7 @@ package com.example.jinyoon.a03popularmoviever2.data;//package com.example.jinyo
 //
 //                MovieContract.MovieEntry._ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
 //                MovieContract.MovieEntry.COLUMN_MOVIE_ID+" TEXT NOT NULL, "+
-//                MovieContract.MovieEntry.COLUMN_POSTER_IMAGE+" BLOB NOT NULL, "+
+//                MovieContract.MovieEntry.COLUMN_POSTER_IMAGE+" TEXT NOT NULL, "+
 //                MovieContract.MovieEntry.COLUMN_RELEASE_DATE+" REAL NOT NULL, "+
 //                MovieContract.MovieEntry.COLUMN_TITLE+" TEXT NOT NULL, "+
 //                MovieContract.MovieEntry.COLUMN_SYNOPSIS+" TEXT NOT NULL, "+

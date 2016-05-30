@@ -1,6 +1,6 @@
-package com.example.jinyoon.a03popularmoviever2.data;//package com.example.jinyoon.popularmovie.data;
-//
+//package com.example.jinyoon.a03popularmoviever2.data;//package com.example.jinyoon.popularmovie.data;
 //import android.content.ContentResolver;
+//
 //import android.content.ContentUris;
 //import android.net.Uri;
 //import android.provider.BaseColumns;
