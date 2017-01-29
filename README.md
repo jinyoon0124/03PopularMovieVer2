@@ -1,5 +1,5 @@
 # 03PopularMovieVer2- Udacity Android Nanodegree Project 2
-This is an app that shows moview information such as rating, review, trailer, synopsis and release date. Both 
+This is an app that shows moview information such as rating, review, trailer, synopsis and release date for both phone and tablet.
 
 ### Phone
 ![Demo](https://cloud.githubusercontent.com/assets/17938363/22362028/64b02dfa-e414-11e6-9422-5dd594525834.gif)
